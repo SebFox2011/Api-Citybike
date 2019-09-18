@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    //
+               append ou prepend pour gérer si le block efface le contenu par défaut
+               ou si il se met avant ou après
+    //
+
+    h1 Bonjour tout le monde ! et #{username} et #{sitename}
+
+    if image
+        img(src='/'+image.path alt=image.filename)
+    //
+        exemple pour bootstrap ! installer Bootstrap !
+    .card.text-center
+        .card-header Bootstrap 4 card example
+        .card-body
+            .card-title Hello World, this is PugHtml
+            i.fa.fa-home.fa-2x.text-primary
+        .card-footer.text-muted powered by Bibooki
+        a.btn.btn-danger(href='https://www.google.fr') Google
+
+    form(action='/user/new' method='POST' enctype='multipart/form-data')
+        input(type='text' name='firstname' placeholder='firstname')
+        input(type='text' name='lastname' placeholder='lastname')
+        input(type='file' name='avatar' accept='image/*' placeholder='avatar')
+        input(type='submit')
+
+    form(action='/stations' method='POST')
+        input(type='text' name='name' placeholder='Ajouter une nouvelle station')
+        input(type='number' name='spaces_available' placeholder='Espace disponible')
+        input(type='submit')
+
+    button#show-geoloc Afficher les stations les plus proches
+
+    ul#near-stations
+
+    if stations
+        ul
+            each station in stations
+                if station.spaces_available >= 20
+                    li='Nom de la station: ' + station.name + ' (' + station.spaces_available + ')'
